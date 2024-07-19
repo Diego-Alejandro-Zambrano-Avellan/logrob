@@ -1,4 +1,5 @@
 <div>
+    <h2>Crear Tarea</h2>
 <form wire:submit.prevent="submit">
         <div>
             <label for="descripcion">Descripción</label>

@@ -7,17 +7,24 @@ use Livewire\Component;
 use App\Models\Tarea;
 class EliminarTarea extends Component
 {
-    public $tarea_id;
-    public function delete()
+    public function delete($id)
     {
-        Tarea::find($this->tarea_id)->delete();
-        session()->flash('message', 'Tarea eliminada correctamente.');
+        $tarea = Tarea::find($id);
+
+        if ($tarea) {
+            $tarea->delete();
+            session()->flash('message', 'Tarea eliminada correctamente.');
+        } else {
+            session()->flash('error', 'La tarea no existe.');
+        }
     }
 
     public function render()
     {
+        $tareas = Tarea::all();
+
         return view('livewire.eliminar-tarea', [
-            'tareas' => Tarea::all(),
+            'tareas' => $tareas,
         ]);
     }
 }

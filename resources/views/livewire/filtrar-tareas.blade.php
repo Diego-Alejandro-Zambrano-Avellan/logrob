@@ -1,14 +1,32 @@
 <div>
-<h2>Filtrar Tareas por Número de Cédula</h2>
-    <input type="text" wire:model="cedula" placeholder="Ingrese número de cédula">
+<h2>Filtrar Tareas por Cédula del Empleado</h2>
 
-    @if($tareas->isNotEmpty())
-        <ul>
+<div>
+    <label for="cedula">Cédula del Empleado:</label>
+    <input type="text" id="cedula" wire:model.debounce.300ms="cedula">
+</div>
+
+@if ($tareas->isNotEmpty())
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descripción</th>
+                <th>Empleado</th>
+            </tr>
+        </thead>
+        <tbody>
             @foreach($tareas as $tarea)
-                <li>{{ $tarea->descripcion }} ({{ $tarea->horas_asignadas }} horas)</li>
+                <tr>
+                    <td>{{ $tarea->id }}</td>
+                    <td>{{ $tarea->descripcion }}</td>
+                    <td>{{ $tarea->empleado->nombre }}</td>
+                </tr>
             @endforeach
-        </ul>
-    @else
-        <p>No se encontraron tareas para esta cédula.</p>
-    @endif
+        </tbody>
+    </table>
+@else
+    <p>No se encontraron tareas para la cédula proporcionada.</p>
+@endif
+
 </div>

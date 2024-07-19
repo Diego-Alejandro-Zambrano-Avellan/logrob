@@ -10,34 +10,36 @@ class AsignarTarea extends Component
 {
     public $empleado_id;
     public $tarea_id;
-    public $horas_trabajadas;
-    protected $rules = [
-        'empleado_id' => 'required|exists:empleados,id',
-        'tarea_id' => 'required|exists:tareas,id',
-        'horas_trabajadas' => 'required|integer|min:1',
-    ];
-    public function submit()
-    {
-        $this->validate();
-
-        $tarea = Tarea::find($this->tarea_id);
-
-        if ($this->horas_trabajadas > $tarea->horas_asignadas) {
-            session()->flash('error', 'El tiempo invertido no puede superar las horas asignadas.');
-            return;
-        }
-
-        $tarea->empleado_id = $this->empleado_id;
-        $tarea->save();
-
-        $this->reset(['empleado_id', 'tarea_id', 'horas_trabajadas']);
-    }
 
     public function render()
     {
+        $empleados = Empleado::all();
+        $tareas = Tarea::whereNull('empleado_id')->get();
+        
         return view('livewire.asignar-tarea', [
-            'empleados' => Empleado::all(),
-            'tareas' => Tarea::all(),
+            'empleados' => $empleados,
+            'tareas' => $tareas,
         ]);
     }
+
+    public function submit()
+    {
+        $this->validate([
+            'empleado_id' => 'required|exists:empleados,id',
+            'tarea_id' => 'required|exists:tareas,id',
+        ]);
+
+        $tarea = Tarea::find($this->tarea_id);
+        $empleado = Empleado::find($this->empleado_id);
+
+        // Assuming each employee has a `horas_disponibles` attribute
+        if ($empleado->horas_disponibles >= $tarea->horas_asignadas) {
+            $tarea->empleado_id = $this->empleado_id;
+            $tarea->save();
+            session()->flash('message', 'Tarea asignada correctamente.');
+        } else {
+            session()->flash('error', 'El tiempo invertido en la tarea supera las horas disponibles del empleado.');
+        }
+    }
+
 }

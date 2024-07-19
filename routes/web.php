@@ -17,4 +17,6 @@ Route::get('/posts', \App\Livewire\Posts\Index::class)->name('posts.index');
 Route::get('/posts/create', \App\Livewire\Posts\Create::class)->name('posts.create');
 Route::get('/posts/show/{post}', \App\Livewire\Posts\Show::class)->name('posts.show');
 Route::get('/posts/update/{post}', \App\Livewire\Posts\Edit::class)->name('posts.edit');
-
+Route::get('/editar-empleado/{id}', function ($id) {
+    return view('editar-empleado', ['empleado_id' => $id]);
+});

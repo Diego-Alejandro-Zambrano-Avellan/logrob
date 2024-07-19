@@ -2,7 +2,7 @@
 @if (session()->has('error'))
         <div>{{ session('error') }}</div>
     @endif
-
+<h2>Asignar Tarea a empleado</h2>
     <form wire:submit.prevent="submit">
         <div>
             <label for="empleado">Empleado</label>

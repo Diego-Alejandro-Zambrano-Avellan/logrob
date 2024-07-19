@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-
+use App\Models\Tarea;
 class AgregarTarea extends Component
 {
     public $descripcion;
