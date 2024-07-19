@@ -17,7 +17,7 @@
 <livewire:agregar-tarea />
 <livewire:asignar-tarea />
 <livewire:mostrar-empleados />
-<livewire:editar-empleado:empleadoId="$empleado->id" />
+<livewire:editar-empleado:empleadoId="$empleado->id />
 <livewire:eliminar-tarea />
 <livewire:filtrar-tareas />
 </div>
