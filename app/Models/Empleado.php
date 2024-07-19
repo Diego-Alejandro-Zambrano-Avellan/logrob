@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Empleado extends Model
 {
     use HasFactory;
+    protected $fillable = ['nombre', 'cedula'];
+
+    public function tareas()
+    {
+        return $this->hasMany(Tarea::class);
+    }
+
+
 }

@@ -33,5 +33,11 @@ class Tarea extends Model
     {
         return view('livewire.agregar-tarea');
     }
+    protected $fillable = ['descripcion', 'horas_asignadas', 'empleado_id'];
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class);
+    }
     use HasFactory;
 }
